@@ -4,6 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class School {
+  
+  public static void showAll(List<Student> ls) {
+    for (Student s : ls) {
+      System.out.println("> " + s);
+    }
+    System.out.println("--------------------------------");
+  }
+  
   public static void main(String[] args) {
     List<Student> school = Arrays.asList(
         Student.ofNameGradeCourses("Fred", 68, "Maths", "Physics"),
@@ -16,6 +24,6 @@ public class School {
     System.out.println("> " + school);
     
     school.sort(Student.getGradeComparator());
-    
+    showAll(school);
   }
 }

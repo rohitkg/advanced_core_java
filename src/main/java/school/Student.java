@@ -39,16 +39,39 @@ public final class Student {
     return "Student{" + "name=" + name + ", averageGrade=" + averageGrade + ", courses=" + courses + '}';
   }
 
-  private static final Comparator<Student> gradeComparator = new GradeComparator();
+  private static final Comparator<Student> gradeComparator = (o1, o2) -> {
+    return o1.getAverageGrade() - o2.getAverageGrade();
+  };
+
+  // derivation of lambda comparator
+//  private static final Comparator<Student> gradeComparator = /*new Comparator<Student>() {*/
+////    @Override
+//    /*public int compare*/(Student o1, Student o2) -> {
+//      System.out.println("running lambda comparator...");
+//      return o1.getAverageGrade() - o2.getAverageGrade();
+//    }
+//  /*}*/;
+//  
+  // anonymous inner class...
+//  private static final Comparator<Student> gradeComparator = new /*GradeComparator();
+//  private static class GradeComparator implements */Comparator<Student>() {
+//
+//    @Override
+//    public int compare(Student o1, Student o2) {
+//      return o1.getAverageGrade() - o2.getAverageGrade();
+//    }
+//  };
+//  
+//  private static final Comparator<Student> gradeComparator = new GradeComparator();
+//  private static class GradeComparator implements Comparator<Student> {
+//
+//    @Override
+//    public int compare(Student o1, Student o2) {
+//      return o1.getAverageGrade() - o2.getAverageGrade();
+//    }
+//  }
   public static Comparator<Student> getGradeComparator() {
     return gradeComparator;
   }
-  
-  private static class GradeComparator implements Comparator<Student> {
 
-    @Override
-    public int compare(Student o1, Student o2) {
-      return o1.getAverageGrade() - o2.getAverageGrade();
-    }
-  }
 }
