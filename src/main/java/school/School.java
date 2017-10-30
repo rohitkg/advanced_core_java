@@ -1,10 +1,48 @@
 package school;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+interface StudentCriterion {
+  boolean test(Student s);
+}
+
 public class School {
   
+  public static List<Student> getStudentsByCriterion(Iterable<Student> in, StudentCriterion criterion) {
+    List<Student> rv = new ArrayList<>();
+    
+    for (Student s : in) {
+      if (criterion.test(s)) {
+        rv.add(s);
+      }
+    }
+    return rv;
+  }
+  
+//  public static List<Student> getSmartStudents(Iterable<Student> in, int threshold) {
+//    List<Student> rv = new ArrayList<>();
+//    
+//    for (Student s : in) {
+//      if (s.getAverageGrade() > threshold) {
+//        rv.add(s);
+//      }
+//    }
+//    return rv;
+//  }
+//  
+//  public static List<Student> getEnthusiasticStudents(Iterable<Student> in, int threshold) {
+//    List<Student> rv = new ArrayList<>();
+//    
+//    for (Student s : in) {
+//      if (s.getCourses().size() > threshold) {
+//        rv.add(s);
+//      }
+//    }
+//    return rv;
+//  }
+//  
   public static void showAll(List<Student> ls) {
     for (Student s : ls) {
       System.out.println("> " + s);
@@ -25,5 +63,9 @@ public class School {
     
     school.sort(Student.getGradeComparator());
     showAll(school);
+    
+    showAll(getStudentsByCriterion(school, Student.getSmartnessCriterion(70)));
+//    showAll(getSmartStudents(school, 65));
+//    showAll(getEnthusiasticStudents(school, 2));
   }
 }
