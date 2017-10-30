@@ -39,9 +39,13 @@ public final class Student {
     return "Student{" + "name=" + name + ", averageGrade=" + averageGrade + ", courses=" + courses + '}';
   }
 
-  private static final Comparator<Student> gradeComparator = (o1, o2) -> {
-    return o1.getAverageGrade() - o2.getAverageGrade();
-  };
+  public static StudentCriterion getSmartnessCriterion(final int threshold) {
+//    threshold++;
+    return (s) -> s.averageGrade > threshold;
+  }
+  
+  private static final Comparator<Student> gradeComparator = 
+      (o1, o2) -> o1.getAverageGrade() - o2.getAverageGrade();
 
   // derivation of lambda comparator
 //  private static final Comparator<Student> gradeComparator = /*new Comparator<Student>() {*/
