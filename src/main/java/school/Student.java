@@ -2,6 +2,7 @@ package school;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public final class Student {
@@ -12,8 +13,8 @@ public final class Student {
 
   private Student() {
   }
-  
-  public static Student ofNameGradeCourses(String name, int averageGrade, String ... courses) {
+
+  public static Student ofNameGradeCourses(String name, int averageGrade, String... courses) {
     Student self = new Student();
     self.name = name;
     self.averageGrade = averageGrade;
@@ -33,11 +34,21 @@ public final class Student {
     return Collections.unmodifiableList(courses);
   }
 
-  
   @Override
   public String toString() {
     return "Student{" + "name=" + name + ", averageGrade=" + averageGrade + ", courses=" + courses + '}';
   }
 
+  private static final Comparator<Student> gradeComparator = new GradeComparator();
+  public static Comparator<Student> getGradeComparator() {
+    return gradeComparator;
+  }
   
+  private static class GradeComparator implements Comparator<Student> {
+
+    @Override
+    public int compare(Student o1, Student o2) {
+      return o1.getAverageGrade() - o2.getAverageGrade();
+    }
+  }
 }

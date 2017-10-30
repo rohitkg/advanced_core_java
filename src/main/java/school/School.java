@@ -15,7 +15,7 @@ public class School {
     
     System.out.println("> " + school);
     
-    school.sort(new StudentGradeComparator());
+    school.sort(Student.getGradeComparator());
     
   }
 }
