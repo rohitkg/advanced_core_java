@@ -8,6 +8,10 @@ interface StudentCriterion {
   boolean test(Student s);
 }
 
+interface Banana {
+  boolean peel(Student s);
+}
+
 public class School {
   
   public static List<Student> getStudentsByCriterion(Iterable<Student> in, StudentCriterion criterion) {
@@ -65,7 +69,10 @@ public class School {
     showAll(school);
     
     showAll(getStudentsByCriterion(school, Student.getSmartnessCriterion(70)));
+    showAll(getStudentsByCriterion(school, (s) -> s.getAverageGrade() > 80));
 //    showAll(getSmartStudents(school, 65));
 //    showAll(getEnthusiasticStudents(school, 2));
+
+//    boolean x = ((Banana)((s) -> s.getAverageGrade() > 80)).peel(Student.ofNameGradeCourses("Mary", 72, "Electronics"));
   }
 }
