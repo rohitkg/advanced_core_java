@@ -16,10 +16,6 @@ import java.util.List;
 
 public class School {
 
-  public static <E> Criterion<E> inverse(Criterion<E> crit) {
-    return e -> !crit.test(e);
-  }
-  
   public static <E> List<E> filter(Iterable<E> in, Criterion<E> crit) {
     List<E> rv = new ArrayList<>();
 
@@ -90,8 +86,10 @@ public class School {
     System.out.println("Smart:");
     showAll(getStudentsByCriterion(school, smarterThan70));
     System.out.println("Not so smart:");
-    showAll(getStudentsByCriterion(school, inverse(smarterThan70)));
+    showAll(getStudentsByCriterion(school, Criterion.inverse(smarterThan70)));
     
+    System.out.println("MidRange:");
+    showAll(filter(school, Student.getSmartnessCriterion(60).and(Student.getSmartnessCriterion(81).inverse())));
     
     showAll(getStudentsByCriterion(school, (s) -> s.getAverageGrade() > 80));
 //    showAll(getSmartStudents(school, 65));
