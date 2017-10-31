@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-interface StudentCriterion {
+//interface StudentCriterion {
+//
+//  boolean test(Student s);
+//}
 
-  boolean test(Student s);
-}
-
-interface Banana {
-
-  boolean peel(Student s);
-}
+//interface Banana {
+//
+//  boolean peel(Student s);
+//}
 
 public class School {
 
+  public static <E> Criterion<E> inverse(Criterion<E> crit) {
+    return e -> !crit.test(e);
+  }
+  
   public static <E> List<E> filter(Iterable<E> in, Criterion<E> crit) {
     List<E> rv = new ArrayList<>();
 
@@ -27,7 +31,8 @@ public class School {
     return rv;
   }
 
-  public static List<Student> getStudentsByCriterion(Iterable<Student> in, StudentCriterion criterion) {
+  public static List<Student> getStudentsByCriterion(Iterable<Student> in,
+      Criterion<Student> criterion) {
     List<Student> rv = new ArrayList<>();
 
     for (Student s : in) {
@@ -81,7 +86,13 @@ public class School {
     school.sort(Student.getGradeComparator());
     showAll(school);
 
-    showAll(getStudentsByCriterion(school, Student.getSmartnessCriterion(70)));
+    Criterion<Student> smarterThan70 = Student.getSmartnessCriterion(70);
+    System.out.println("Smart:");
+    showAll(getStudentsByCriterion(school, smarterThan70));
+    System.out.println("Not so smart:");
+    showAll(getStudentsByCriterion(school, inverse(smarterThan70)));
+    
+    
     showAll(getStudentsByCriterion(school, (s) -> s.getAverageGrade() > 80));
 //    showAll(getSmartStudents(school, 65));
 //    showAll(getEnthusiasticStudents(school, 2));

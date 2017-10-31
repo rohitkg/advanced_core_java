@@ -39,7 +39,7 @@ public final class Student {
     return "Student{" + "name=" + name + ", averageGrade=" + averageGrade + ", courses=" + courses + '}';
   }
 
-  public static StudentCriterion getSmartnessCriterion(final int threshold) {
+  public static Criterion<Student> getSmartnessCriterion(final int threshold) {
 //    threshold++;
     return (s) -> s.averageGrade > threshold;
   }
