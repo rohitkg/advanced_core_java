@@ -35,6 +35,12 @@ public class SuperIterable<E> implements Iterable<E> {
     self.forEach(e -> op.apply(e).forEach(f -> rv.add(f)));
     return new SuperIterable<>(rv);
   }
+  
+  public <F> SuperIterable<F> distinct(Function<E, SuperIterable<F>> op) {
+	    List<F> rv = new ArrayList<>();
+	    self.forEach(e -> op.apply(e).forEach(f -> {if(!rv.contains(f)) rv.add(f);} ) );
+	    return new SuperIterable<>(rv); 
+  }
 
   @Override
   public Iterator<E> iterator() {
@@ -54,7 +60,8 @@ public class SuperIterable<E> implements Iterable<E> {
     System.out.println("----------------------------------");
     school
         .filter(s -> s.getAverageGrade() > 60)
-        .flatMap(s -> SuperIterable.of(s.getCourses()))
+        //.flatMap(s -> SuperIterable.of(s.getCourses()))
+        .distinct(s -> SuperIterable.of(s.getCourses()))
         .forEach(s-> System.out.println("> " + s));
   }
 }
