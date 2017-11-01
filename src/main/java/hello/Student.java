@@ -5,6 +5,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+
+//interface StudentCriterion {
+//	boolean test(Student s);
+//}
+
 public class Student /*implements Comparable<Student>*/ {
 	private String name;
 	private float averageGrade;
@@ -88,7 +93,7 @@ public class Student /*implements Comparable<Student>*/ {
 	
 	@Override
 	public String toString() {
-		return "[" + this.name + ", " + this.averageGrade + ", " + this.coursesEnrolled + "]";
+		return "{" + this.name + ", " + this.averageGrade + ", " + this.coursesEnrolled + "}";
 	}
 	
 	//Name comparison
@@ -100,6 +105,18 @@ public class Student /*implements Comparable<Student>*/ {
 	private static Comparator<Student> GradeComparator = (s1, s2) -> Float.compare(s1.averageGrade, s2.averageGrade);
 	public static Comparator<Student> getGradeComparator() {
 		return GradeComparator;
+	}
+	
+//	public static StudentCriterion getSmartCriterion(float threshold) {
+//		return (s) -> s.averageGrade > threshold;
+//	}
+	
+	public static MyCriterion<Student> getSmartCriterion(float threshold) {
+		return o -> o.averageGrade > threshold;
+	}
+	
+	public static MyCriterion<Student> getCourseCriterion(int countThreshold) {
+		return o -> o.coursesEnrolled.size() >= countThreshold;
 	}
 
 	/*@Override
