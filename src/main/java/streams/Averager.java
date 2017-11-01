@@ -35,7 +35,8 @@ public class Averager {
 //        .parallel()
 //        .unordered()
         .map(x -> Math.sin(x))
-        .collect(() -> new Average(), (b, d) -> b.include(d), (b1, b2) -> b1.merge(b2))
+        .collect(Average::new, Average::include, Average::merge)
+//        .collect(() -> new Average(), (b, d) -> b.include(d), (b1, b2) -> b1.merge(b2))
         .use(a -> System.out.println(a.get()));
     long end = System.nanoTime();
     System.out.println("Time was " + (end - start) / 1_000_000);
