@@ -14,15 +14,16 @@ public class Concordance {
   public static void main(String[] args) throws Throwable {
     try (Stream<String> lines = Files.lines(Paths.get("PrideAndPrejudice.txt"))) {
       lines
-          .flatMap(s -> WORD_BREAKS.splitAsStream(s))
+          .flatMap(WORD_BREAKS::splitAsStream)
           .filter(s -> s.length() > 0)
-          .map(s -> s.toLowerCase())
+          .map(String::toLowerCase)
           .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
           .entrySet().stream()
 //          .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
           .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
           .limit(200)
-          .forEach(e -> System.out.printf("%20s : %5d\n", e.getKey(), e.getValue()));
+          .map(e -> String.format("%20s : %5d", e.getKey(), e.getValue()))
+          .forEach(System.out::println);
     }
   }
 }
